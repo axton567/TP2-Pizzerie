@@ -149,11 +149,11 @@ class Commande {
         this.pizza[this.pizza.length] = pizzaSupplémentaire;
     }
     PrixTotal() {
-        var prixPizza = 0;
-
         for (var i = 0; i < this.pizza.length; i++) {
-            prixPizza += this.pizza[i].prixComplet;
+            this.montantTotal += this.pizza[i].prixComplet;
         }
+        prixPizza += prixPizza * this.tps;
+        prixPizza += prixPizza * this.tvq;
         this.montantTotal = prixPizza;
         return this.montantTotal
     }
