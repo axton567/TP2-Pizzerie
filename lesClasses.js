@@ -182,3 +182,78 @@ class Client {
         this.adresseCouriel = nouvelleAdresseCouriel;
     }
 }
+var croute1 = new Croute("mince", 1, "mince", 2, "P");
+var croute2 = new Croute("Épaise", 1, "Épaise", 2, "G");
+var fromage1 = new Fromage("mozarella", 3, 3);
+var fromage2 = new Fromage("Chedar", 5, 1);
+var fromage3 = new Fromage("Suisse", 3, 2);
+var garniture1 = new Garniture("Bacon", 6, 5);
+var garniture2 = new Garniture("oignon", 8, 1);
+var garniture3 = new Garniture("tomate", 5, 2);
+var garniture4 = new Garniture("champignon", 8, 3);
+var epice1 = new Epice("Origant", 2);
+
+//Code pour tester la classe Pizza(modifier la taille, type de croute, fromage, garniture, ajoute de fromage et son prix, ajoute de garniture et son prix). 
+
+var pizza1 = new Pizza(1, croute2.taille, croute1, [], [], null, 45);
+pizza1.prixCompletPizza();
+ pizza1.modifierTaillePizza("G");
+pizza1.modifierCroutePizza(croute2);
+pizza1.modifierFromagePizza(fromage3, 0);
+pizza1.modifierGarniturePizza(garniture3, 0);
+pizza1.ajouterFromage(fromage2);;
+pizza1.ajouterFromage(fromage1);
+pizza1.ajouterGarniture(garniture2);
+pizza1.modifierTempsPizza(60);
+pizza1.prixCompletPizza();
+console.log(pizza1.lecturePizza());
+console.log(pizza1);
+
+var pizza2 = new Pizza(2, croute1.taille, croute1, [], [], null, 45);
+
+ pizza2.modifierTaillePizza("P");
+pizza2.modifierCroutePizza(croute1);
+pizza2.modifierFromagePizza(fromage3, 0);
+pizza2.modifierGarniturePizza(garniture3, 0);
+pizza2.ajouterFromage(fromage2);;
+pizza2.ajouterGarniture(garniture1);
+pizza2.prixCompletPizza();
+console.log(pizza2.lecturePizza());
+console.log(pizza2);
+
+//Code pour tester la classe Commande( ajoute des pizza, calcule total de la facture).
+
+var commande1 = new Commande(1325645, "2021/02/14", "17:45", [], null);
+
+commande1.ajouterPizza(pizza1);
+commande1.ajouterPizza(pizza2);
+commande1.PrixTotal();;
+console.log(commande1.lectureCommande());
+console.log(commande1);
+
+var commande2 = new Commande(13, "2021/02/1", "10:30", [], null);
+
+commande2.ajouterPizza(pizza2);
+commande2.PrixTotal();;
+console.log(commande2.lectureCommande());
+console.log(commande2);
+
+
+//Code pour tester classe client( modifier le nom, prénom, adresse e-mail, numéro de télephone et la lecture des informations entrées.)
+
+var client1 = new Client("Harington", "Kit", 4564631, "kitHarington1@qc.ca", commande1.numeroCommande);
+
+console.log(client1.lectureClient());
+client1.modifierNomClient("Leslie");
+client1.modifierPrenomClient("Rose");
+client1.modifierAdresseClient("JolieDemoiselle@qc.ca")
+client1.modifierNumeroClient(450996655);
+console.log(client1.lectureClient());
+
+var client2 = new Client("Harington", "Kit", 4564631, "kitHarington1@qc.ca", commande1.numeroCommande);
+
+client2.modifierNomClient("Malo");
+client2.modifierPrenomClient("Mathieu");
+client2.modifierAdresseClient("MathieuMalo22@hotmail.ca")
+client2.modifierNumeroClient(45018215);
+console.log(client2.lectureClient());

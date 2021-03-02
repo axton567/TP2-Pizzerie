@@ -65,3 +65,31 @@ function verifierCodePostal(codePostal) {
     }
     return vérifier;
 }
+// Code pour tester les fonctions.
+
+function testVerifierNumeroDeTelephone(entree, attendu){
+    console.log("Entrée : " + entree);
+    console.log("Résultat attendu : " + attendu);
+    console.log("Résultat obtenu: "+ verifierNumeroDeTelephone(entree));
+}
+
+function testVerifierEntier(entree, attendu){
+    console.log("Entrée : " + entree);
+    console.log("Résultat attendu : " + attendu);
+    console.log("Résultat obtenu: "+ verifierEntier(entree));
+}
+
+function testVerifierCodePostal(entree, attendu){
+    console.log("Entrée : " + entree);
+    console.log("Résultat attendu : " + attendu);
+    console.log("Résultat obtenu: "+ verifierCodePostal(entree));
+}
+
+testVerifierNumeroDeTelephone("012345678",true);
+testVerifierNumeroDeTelephone("0123G5866",false);
+
+testVerifierEntier(2,true);
+testVerifierEntier(-6,false);
+
+testVerifierCodePostal("J3H5c2",true);
+testVerifierCodePostal("hhhttt22",false);
