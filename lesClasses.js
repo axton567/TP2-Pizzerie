@@ -197,7 +197,7 @@ var epice1 = new Epice("Origant", 2);
 
 var pizza1 = new Pizza(1, croute2.taille, croute1, [], [], null, 45);
 pizza1.prixCompletPizza();
- pizza1.modifierTaillePizza("G");
+pizza1.modifierTaillePizza("G");
 pizza1.modifierCroutePizza(croute2);
 pizza1.modifierFromagePizza(fromage3, 0);
 pizza1.modifierGarniturePizza(garniture3, 0);
@@ -211,7 +211,7 @@ console.log(pizza1);
 
 var pizza2 = new Pizza(2, croute1.taille, croute1, [], [], null, 45);
 
- pizza2.modifierTaillePizza("P");
+pizza2.modifierTaillePizza("P");
 pizza2.modifierCroutePizza(croute1);
 pizza2.modifierFromagePizza(fromage3, 0);
 pizza2.modifierGarniturePizza(garniture3, 0);
