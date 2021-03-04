@@ -132,16 +132,17 @@ class Pizza {
 }
 
 class Commande {
-    constructor(numeroCommande, dateCommande, heureCommande, pizza, montantTotal) {
+    constructor(numeroCommande, dateCommande, heureCommande, pizza, montantTotal,client) {
         this.numeroCommande = numeroCommande;
         this.dateCommande = dateCommande;
         this.heureCommande = heureCommande;
         this.pizza = pizza;
         this.montantTotal = montantTotal;
+        this.client = client;
     }
     lectureCommande() {
         return "Numéro de commande: " + this.numeroCommande + "\nDate de la commande: " + this.dateCommande + "\nHeure de la commende: " + this.heureCommande +
-            "\nLes pizzas: " + this.pizza[this.pizza.length] + "\nMontant total de la facture: " + this.montantTotal;
+            "\nLes pizzas: " + this.pizza[this.pizza.length] + "\nMontant total de la facture: " + this.montantTotal + "Client: " + this.client;
     }
     ajouterPizza(pizzaSupplémentaire) {
         this.pizza[this.pizza.length] = pizzaSupplémentaire;
@@ -158,16 +159,16 @@ class Commande {
 }
 
 class Client {
-    constructor(nom, prénom, numeroTelephone, adresseCouriel, commande) {
+    constructor(nom, prénom, numeroTelephone, adresseCouriel) {
         this.nom = nom;
         this.prenom = prénom;
         this.numeroTelephone = numeroTelephone;
         this.adresseCouriel = adresseCouriel;
-        this.commande = commande;
+
     }
     lectureClient() {
         return "\nNom du client: " + this.nom + "\nPrénom du client: " + this.prenom + "\nNuméro de Téléphone: " + this.numeroTelephone +
-            "\nAdresse couriel: " + this.adresseCouriel + "\nNuméro de commende en ligne: " + this.commande;
+            "\nAdresse couriel: " + this.adresseCouriel;
     }
     modifierNomClient(nouveauNom) {
         this.nom = nouveauNom;
