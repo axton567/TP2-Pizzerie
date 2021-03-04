@@ -222,27 +222,9 @@ pizza2.prixCompletPizza();
 console.log(pizza2.lecturePizza());
 console.log(pizza2);
 
-//Code pour tester la classe Commande( ajoute des pizza, calcule total de la facture).
-
-var commande1 = new Commande(1325645, "2021/02/14", "17:45", [], null);
-
-commande1.ajouterPizza(pizza1);
-commande1.ajouterPizza(pizza2);
-commande1.PrixTotal();;
-console.log(commande1.lectureCommande());
-console.log(commande1);
-
-var commande2 = new Commande(13, "2021/02/1", "10:30", [], null);
-
-commande2.ajouterPizza(pizza2);
-commande2.PrixTotal();;
-console.log(commande2.lectureCommande());
-console.log(commande2);
-
-
 //Code pour tester classe client( modifier le nom, prénom, adresse e-mail, numéro de télephone et la lecture des informations entrées.)
 
-var client1 = new Client("Harington", "Kit", 4564631, "kitHarington1@qc.ca", commande1.numeroCommande);
+var client1 = new Client("Harington", "Kit", 4564631, "kitHarington1@qc.ca");
 
 console.log(client1.lectureClient());
 client1.modifierNomClient("Leslie");
@@ -251,10 +233,27 @@ client1.modifierAdresseClient("JolieDemoiselle@qc.ca")
 client1.modifierNumeroClient(450996655);
 console.log(client1.lectureClient());
 
-var client2 = new Client("Harington", "Kit", 4564631, "kitHarington1@qc.ca", commande1.numeroCommande);
+var client2 = new Client("Harington", "Kit", 4564631, "kitHarington1@qc.ca");
 
 client2.modifierNomClient("Malo");
 client2.modifierPrenomClient("Mathieu");
 client2.modifierAdresseClient("MathieuMalo22@hotmail.ca")
 client2.modifierNumeroClient(45018215);
 console.log(client2.lectureClient());
+
+//Code pour tester la classe Commande( ajoute des pizza, calcule total de la facture).
+
+var commande1 = new Commande(1325645, "2021/02/14", "17:45", [], null,client1);
+
+commande1.ajouterPizza(pizza1);
+commande1.ajouterPizza(pizza2);
+commande1.PrixTotal();;
+console.log(commande1.lectureCommande());
+console.log(commande1);
+
+var commande2 = new Commande(13, "2021/02/1", "10:30", [], null,client2);
+
+commande2.ajouterPizza(pizza2);
+commande2.PrixTotal();;
+console.log(commande2.lectureCommande());
+console.log(commande2);
