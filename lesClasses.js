@@ -152,9 +152,8 @@ class Commande {
         for (var i = 0; i < this.pizza.length; i++) {
             this.montantTotal += this.pizza[i].prixComplet;
         }
-        prixPizza += prixPizza * this.tps;
-        prixPizza += prixPizza * this.tvq;
-        this.montantTotal = prixPizza;
+        this.montantTotal += this.montantTotal * this.tps;
+        this.montantTotal += this.montantTotal * this.tvq;
         return this.montantTotal
     }
 }
