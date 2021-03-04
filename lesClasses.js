@@ -70,6 +70,26 @@ class Garniture extends Aliments {
 class Epice extends Aliments {
 }
 
+class taille {
+    constructor(nom,diametre,facteur){
+        this.nom = nom;
+        this.diametre = diametre;
+        this.facteur = facteur;
+    }
+    lectureTaille(){
+        return "taille: " + this.nom + "diametre de: " + this.diametre + "facteur: " + this.facteur;
+    }
+    modifierTaille(taille){
+        this.nom = taille;
+    }
+    modifierDiametre(diametre){
+        this.diametre = diametre;
+    }
+    modifierFacteur(facteur){
+        this.facteur = facteur;
+    }
+
+}
 class Pizza {
     constructor(numeroPizza, taille, croute, fromage, garniture, prixComplet, tempsCuisson) {
         this.numeroPizza = numeroPizza;
@@ -117,14 +137,14 @@ class Pizza {
             garniture += this.garniture[i].prix;
         }
 
-        this.prixComplet = this.croute.prix + fromage + garniture;
-        if (this.croute.taille == "P") {
-            this.prixComplet = this.prixComplet;
+        this.prixComplet = this.croute.prix + (fromage*this.taille.facteur) + (garniture*this.taille.facteur);
+        if (this.taille.nom == "P") {
+            this.prixComplet = this.prixComplet * 1;
         }
-        if (this.croute.taille == "M") {
+        if (this.taille.nom == "M") {
             this.prixComplet = this.prixComplet * 2;
         }
-        if (this.croute.taille == "G") {
+        if (this.taille.nom == "G") {
             this.prixComplet = this.prixComplet * 3;
         }
         return this.prixComplet;
@@ -192,6 +212,9 @@ var garniture2 = new Garniture("oignon", 8, 1);
 var garniture3 = new Garniture("tomate", 5, 2);
 var garniture4 = new Garniture("champignon", 8, 3);
 var epice1 = new Epice("Origant", 2);
+var tailleP = new taille("P",7,1);
+var tailleM = new taille("M",12,2);
+var tailleG = new taille("G",15,3);
 
 //Code pour tester la classe Pizza(modifier la taille, type de croute, fromage, garniture, ajoute de fromage et son prix, ajoute de garniture et son prix). 
 
