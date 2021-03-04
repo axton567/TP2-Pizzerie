@@ -152,12 +152,14 @@ class Pizza {
 }
 
 class Commande {
-    constructor(numeroCommande, dateCommande, heureCommande, pizza, montantTotal) {
+    constructor(numeroCommande, dateCommande, heureCommande, pizza, montantTotal, tps= 0.05, tvq = 0.09975) {
         this.numeroCommande = numeroCommande;
         this.dateCommande = dateCommande;
         this.heureCommande = heureCommande;
         this.pizza = pizza;
         this.montantTotal = montantTotal;
+        this.tps =tps;
+        this.tvq = tvq;
     }
     lectureCommande() {
         return "Numéro de commande: " + this.numeroCommande + "\nDate de la commande: " + this.dateCommande + "\nHeure de la commende: " + this.heureCommande +
@@ -167,11 +169,11 @@ class Commande {
         this.pizza[this.pizza.length] = pizzaSupplémentaire;
     }
     PrixTotal() {
-        var prixPizza = 0;
-
         for (var i = 0; i < this.pizza.length; i++) {
-            prixPizza += this.pizza[i].prixComplet;
+            this.montantTotal += this.pizza[i].prixComplet;
         }
+        prixPizza += prixPizza * this.tps;
+        prixPizza += prixPizza * this.tvq;
         this.montantTotal = prixPizza;
         return this.montantTotal
     }
