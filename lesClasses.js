@@ -164,7 +164,7 @@ class Commande {
     }
     lectureCommande() {
         return "Numéro de commande: " + this.numeroCommande + "\nDate de la commande: " + this.dateCommande + "\nHeure de la commende: " + this.heureCommande +
-            "\nLes pizzas: " + this.pizza[this.pizza.length] + "\nMontant total de la facture: " + this.montantTotal + "Client: " + this.client;
+            "\nLes pizzas: " + this.pizza.length + "\nMontant total de la facture: " + this.montantTotal + "Client: " + this.client;
     }
     ajouterPizza(pizzaSupplémentaire) {
         this.pizza[this.pizza.length] = pizzaSupplémentaire;
