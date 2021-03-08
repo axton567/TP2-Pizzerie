@@ -271,13 +271,13 @@ var commande1 = new Commande(1325645, "2021/02/14", "17:45", [], null,this.tps,t
 
 commande1.ajouterPizza(pizza1);
 commande1.ajouterPizza(pizza2);
-commande1.PrixTotal();;
+commande1.prixTotal();;
 console.log(commande1.lectureCommande());
 console.log(commande1);
 
 var commande2 = new Commande(13, "2021/02/1", "10:30", [], null,this.tps,this.tvq,client2);
 
 commande2.ajouterPizza(pizza2);
-commande2.PrixTotal();;
+commande2.prixTotal();;
 console.log(commande2.lectureCommande());
 console.log(commande2);
