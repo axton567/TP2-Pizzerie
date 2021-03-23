@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="lesFonctions.js"></script>
+    <script src="lesClasses.js"></script>
+    <style>
+        .cache {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="Commande.html">Commande</a>
+    <a href="Client.html">Client</a>
+    <a href="Pizza.html">Pizza</a>
+    <a href="#" onclick="afficherOuCacher()">Aliment</a>
+    <br>
+    <div id="sousMenu" class="cache">
+        <a href="Croute.html">Croute</a>
+        <a href="Fromage.html">Fromage</a>
+        <a href="Garniture.html">Garniture</a>
+    </div>
+    <h1>Pizza</h1>
+    <table>
+        <tr>
+            <td><label for="numeroPizza">Numéro:</label></td>
+            <td><input id="numeroPizza" name="numeroPizza"></input></td>
+        </tr>
+        <tr>
+            <td><label for="taillePizza">Taille:</label></td>
+            <td><select id="taillePizza" name="taillePizza">
+             
+            </select>
+            </td> 
+        </tr>
+        <tr>
+            <td><label for="croutePizza">Croute:</label></td>
+            <td><select id="croutePizza" name="croutePizza"> </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="fromagePizza">Fromage:</label></td>
+            <td><select id="fromagePizza" name="fromagePizza"></select>
+                <button id="btn" type="button">+</button>
+                <button id="btn2" type="button">-</button>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="garniturePizza">Garniture:</label></td>
+            <td><select id="garniturePizza" name="garniturePizza"></select>
+
+                <button id="btn3" type="button">+</button>
+                <button id="btn4" type="button">-</button>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="tempCuisson">Temps de cuisson:</label></td>
+            <td><input id="tempCuisson" name="tempCuisson">(minutes)</input> </td> 
+        </tr>
+        <tr>
+            <td><label for="prixPizza">Prix:</label></td>
+            <td><input id="prixPizza" name="prixPizza">à calculer</input> </td> 
+        </tr>
+        <tr>
+            <td colspan="2"><button id="btn5" type="button">Vérifier</button></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button id="btn6" type="button">Soumettre</button></td>
+        </tr>
+    </table>
+</body>
+
+<script>
+    chargerListeSelect("taillePizza", listeTailles);
+    chargerListeSelect("croutePizza", listeCroutes);
+    chargerListeSelect("fromagePizza", listeFromages);
+    chargerListeSelect("garniturePizza", listeGarnitures);
+</script>
+
+</html>
