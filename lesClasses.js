@@ -10,7 +10,7 @@ class Aliments {
         this.poids = poids;
     }
     lectureAliments() {
-        return "nom de l'aliment: " + this.nom + "\nPoids(gramme):" + this.poids;
+        return "Nom de l'aliment: " + this.nom + ", poids:" + this.poids;
     }
     modifierNom(nouveauNom) {
         this.nom = nouveauNom;
@@ -18,6 +18,10 @@ class Aliments {
     modifierPoids(nouveauPoids) {
         this.poids = nouveauPoids;
     }
+    lireNom() {
+        return this.nom;
+    }
+
 }
 
 class Croute extends Aliments {
@@ -28,7 +32,7 @@ class Croute extends Aliments {
         this.taille = taille;
     }
     lectureCroute() {
-        return "type de croute: " + this.type + "\ntaille(P/M/G): " + this.taille + "\nPrix: " + this.prix;
+        return this.lectureAliments() + ", type: " + this.type + ", taille(P/M/G): " + this.taille + ", prix: " + this.prix;
     }
     modifierTaille(nouvelleTaille) {
         this.taille = nouvelleTaille;
@@ -46,8 +50,8 @@ class Fromage extends Aliments {
         super(nom, poids);
         this.prix = prix;
     }
-    lecturePrixFromage() {
-        return "Prix: " + this.prix;
+    lectureFromage() {
+        return this.lectureAliments() + ", prix: " + this.prix;
     }
     modifierPrixFromage(nouveauPrix) {
         this.prix = nouveauPrix;
@@ -59,10 +63,10 @@ class Garniture extends Aliments {
         super(nom, poids);
         this.prix = prix;
     }
-    lecturePrixGraniture() {
-        return "Prix: " + this.prix;
+    lectureGarniture() {
+        return this.lectureAliments() + ", prix: " + this.prix;
     }
-    modifierPrixGraniture(nouveauPrix) {
+    modifierPrixGarniture(nouveauPrix) {
         this.prix = nouveauPrix
     }
 }
@@ -70,39 +74,67 @@ class Garniture extends Aliments {
 class Epice extends Aliments {
 }
 
-class taille {
-    constructor(nom,diametre,facteur){
+class Taille {
+    constructor(nom, diametre, facteur) {
         this.nom = nom;
         this.diametre = diametre;
         this.facteur = facteur;
     }
-    lectureTaille(){
-        return "taille: " + this.nom + "diametre de: " + this.diametre + "facteur: " + this.facteur;
+    lectureTaille() {
+        return "Nom: " + this.nom + ", diametre: " + this.diametre + ", facteur: " + this.facteur;
     }
-    modifierTaille(taille){
+    modifierTaille(taille) {
         this.nom = taille;
     }
-    modifierDiametre(diametre){
+    modifierDiametre(diametre) {
         this.diametre = diametre;
     }
-    modifierFacteur(facteur){
+    modifierFacteur(facteur) {
         this.facteur = facteur;
+    }
+    lireNom() {
+        return this.nom;
     }
 
 }
 class Pizza {
-    constructor(numeroPizza, taille, croute, fromage, garniture, prixComplet, tempsCuisson) {
+    constructor(numeroPizza, taille, croute, fromage, garniture, tempsCuisson) {
         this.numeroPizza = numeroPizza;
         this.taille = taille;
         this.croute = croute;
         this.fromage = fromage;
         this.garniture = garniture;
-        this.prixComplet = prixComplet;
         this.tempsCuisson = tempsCuisson;
+        this.prixComplet = 0;
+        this.prixCompletPizza();
+    }
+    lireNom() {
+        return "Pizza #" + this.numeroPizza;
     }
     lecturePizza() {
-        return "Numéro de pizza: " + this.numeroPizza + "\nTaille de la Pizza: " + this.taille + "\nType de croûte: " + this.croute.type +
-            "\nFromage: " + this.fromage + "\nGarniture: " + this.garniture + "\nPrix de la Pizza : " + this.prixComplet + "\nTemps de cuisson: " + this.tempsCuisson;
+        return "Numéro de pizza: " + this.numeroPizza +
+            ", taille de la Pizza: {" + this.taille.lectureTaille() + "}" +
+            ", type de croûte: {" + this.croute.lectureCroute() + "}" +
+            ", fromage: [" + this.lireFromage() + "]" +
+            ", garniture: [" + this.lireGarniture() + "]" +
+            ", prix de la Pizza : " + this.prixComplet +
+            ", Temps de cuisson: " + this.tempsCuisson;
+    }
+    lireFromage() {
+        var s = "";
+        for (const i in this.fromage) {
+            s += "{" + this.fromage[i].lectureFromage() + "}, ";
+        }
+        s = s.substr(0, s.length - 2);
+        return s;
+    }
+    lireGarniture() {
+        var s = "";
+        for (const i in this.garniture) {
+            s += "{" + this.garniture[i].lectureGarniture() + "}, ";
+        }
+        s = s.substr(0, s.length - 2);
+        return s;
     }
     modifierTaillePizza(nouvelleTaille) {
         this.taille = nouvelleTaille;
@@ -137,34 +169,39 @@ class Pizza {
             garniture += this.garniture[i].prix;
         }
 
-        this.prixComplet = this.croute.prix + (fromage*this.taille.facteur) + (garniture*this.taille.facteur);
-        if (this.taille.nom == "P") {
-            this.prixComplet = this.prixComplet * 1;
-        }
-        if (this.taille.nom == "M") {
-            this.prixComplet = this.prixComplet * 2;
-        }
-        if (this.taille.nom == "G") {
-            this.prixComplet = this.prixComplet * 3;
-        }
+        this.prixComplet = this.croute.prix + (fromage * this.taille.facteur) + (garniture * this.taille.facteur);
         return this.prixComplet;
     }
 }
 
 class Commande {
-    constructor(numeroCommande, dateCommande, heureCommande, pizza, montantTotal, tps= 0.05, tvq = 0.09975,client) {
+    constructor(numeroCommande, client, dateCommande, heureCommande, pizza) {
         this.numeroCommande = numeroCommande;
+        this.client = client;
         this.dateCommande = dateCommande;
         this.heureCommande = heureCommande;
         this.pizza = pizza;
-        this.montantTotal = montantTotal;
-        this.tps =tps;
-        this.tvq = tvq;
-        this.client = client;
+        this.montantTotal = 0;
+        this.tps = 0.05;
+        this.tvq = 0.0975;
+        this.prixTotal();
+
     }
     lectureCommande() {
-        return "Numéro de commande: " + this.numeroCommande + "\nDate de la commande: " + this.dateCommande + "\nHeure de la commende: " + this.heureCommande +
-            "\nLes pizzas: " + this.pizza.length + "\nMontant total de la facture: " + this.montantTotal + "Client: " + this.client;
+        return "Numéro de commande: " + this.numeroCommande +
+            ", client: {" +  this.client.lectureClient()+ "}" +
+            ", date de la commande: " + this.dateCommande +
+            ", heure de la commande: " + this.heureCommande +
+            ", les pizzas: [" +  this.lirePizza() + "]" +
+            ", montant total de la facture: " + this.montantTotal;
+    }
+    lirePizza() {
+        var s = "";
+        for (const i in this.pizza) {
+            s += "{" + this.pizza[i].lecturePizza() + "}, ";
+        }
+        s = s.substr(0, s.length - 2);
+        return s;
     }
     ajouterPizza(pizzaSupplémentaire) {
         this.pizza[this.pizza.length] = pizzaSupplémentaire;
@@ -173,9 +210,10 @@ class Commande {
         for (var i = 0; i < this.pizza.length; i++) {
             this.montantTotal += this.pizza[i].prixComplet;
         }
-        this.montantTotal += this.montantTotal * this.tps;
-        this.montantTotal += this.montantTotal * this.tvq;
-        return this.montantTotal
+        var montantTps = this.montantTotal * this.tps;
+        var montantTvq = this.montantTotal * this.tvq;
+        this.montantTotal += (montantTps + montantTvq);
+        return this.montantTotal;
     }
 }
 
@@ -203,8 +241,11 @@ class Client {
     modifierAdresseClient(nouvelleAdresseCouriel) {
         this.adresseCouriel = nouvelleAdresseCouriel;
     }
+    lireNom() {
+        return this.prenom + " " + this.nom;
+    }
 }
-var croute1 = new Croute("mince", 1, "mince", 2, "P");
+/*  var croute1 = new Croute("mince", 1, "mince", 2, "P");
 var croute2 = new Croute("Épaise", 1, "Épaise", 2, "G");
 var fromage1 = new Fromage("mozarella", 3, 3);
 var fromage2 = new Fromage("Chedar", 5, 1);
@@ -214,13 +255,13 @@ var garniture2 = new Garniture("oignon", 8, 1);
 var garniture3 = new Garniture("tomate", 5, 2);
 var garniture4 = new Garniture("champignon", 8, 3);
 var epice1 = new Epice("Origant", 2);
-var tailleP = new taille("P",7,1);
-var tailleM = new taille("M",12,2);
-var tailleG = new taille("G",15,3);
+var tailleP = new Taille("P", 7, 1);
+var tailleM = new Taille("M", 12, 2);
+var tailleG = new Taille("G", 15, 3); 
 
 //Code pour tester la classe Pizza(modifier la taille, type de croute, fromage, garniture, ajoute de fromage et son prix, ajoute de garniture et son prix). 
 
-var pizza1 = new Pizza(1, tailleP, croute1, [], [], null, 45);
+var pizza1 = new Pizza(1, tailleP, croute1, [], [], 45);
 pizza1.prixCompletPizza();
 pizza1.modifierTaillePizza(tailleM);
 pizza1.modifierCroutePizza(croute2);
@@ -234,7 +275,7 @@ pizza1.prixCompletPizza();
 console.log(pizza1.lecturePizza());
 console.log(pizza1);
 
-var pizza2 = new Pizza(2, tailleM, croute1, [], [], null, 45);
+var pizza2 = new Pizza(2, tailleM, croute1, [], [], 45);
 
 pizza2.modifierTaillePizza(tailleG);
 pizza2.modifierCroutePizza(croute1);
@@ -267,7 +308,7 @@ console.log(client2.lectureClient());
 
 //Code pour tester la classe Commande( ajoute des pizza, calcule total de la facture).
 
-var commande1 = new Commande(1325645, "2021/02/14", "17:45", [], null,this.tps,this.tvq,client1);
+var commande1 = new Commande(1325645, "2021/02/14", "17:45", [], client1);
 
 commande1.ajouterPizza(pizza1);
 commande1.ajouterPizza(pizza2);
@@ -275,9 +316,61 @@ commande1.prixTotal();;
 console.log(commande1.lectureCommande());
 console.log(commande1);
 
-var commande2 = new Commande(13, "2021/02/1", "10:30", [], null,this.tps,this.tvq,client2);
+var commande2 = new Commande(13, "2021/02/1", "10:30", [],client2);
 
 commande2.ajouterPizza(pizza2);
 commande2.prixTotal();;
 console.log(commande2.lectureCommande());
 console.log(commande2);
+ */
+/**
+ * Instanciations avec des faux données pour les tests
+ */
+
+var tailleP = new Taille("P", 12, 1);
+var tailleM = new Taille("M", 20, 2);
+var tailleG = new Taille("G", 30, 3);
+var listeTailles = [tailleP, tailleM, tailleG];
+
+var fausseCroute1 = new Croute("fausse-croute1", 18, "mince", 5, "P");
+var fausseCroute2 = new Croute("fausse-croute2", 23, "épaisse", 7, "M");
+var fausseCroute3 = new Croute("fausse-croute3", 23, "grains", 6, "G");
+var listeCroutes = [fausseCroute1, fausseCroute2, fausseCroute3];
+
+var fausseFromage1 = new Fromage("faux-fromage1", 11, 2.5);
+var fausseFromage2 = new Fromage("faux-fromage2", 13, 3);
+var fausseFromage3 = new Fromage("faux-fromage3", 12, 2);
+var listeFromages = [fausseFromage1, fausseFromage2, fausseFromage3];
+var listeFromagesChoisis = [];
+
+var fausseGarniture1 = new Garniture("fausse-garniture1", 10, 5.3);
+var fausseGarniture2 = new Garniture("fausse-garniture2", 12, 4.7);
+var fausseGarniture3 = new Garniture("fausse-garniture3", 15, 3.5);
+var listeGarnitures = [fausseGarniture1, fausseGarniture2, fausseGarniture3];
+var listeGarnituresChoisis = [];
+var faussePizza1 = new Pizza(
+    10001, tailleM, fausseCroute1,
+    [fausseFromage1],
+    [fausseGarniture1],
+    15
+)
+var faussePizza2 = new Pizza(
+    10002, tailleP, fausseCroute2,
+    [fausseFromage2],
+    [fausseGarniture2],
+    13
+)
+var faussePizza3 = new Pizza(
+    10003, tailleG, fausseCroute1,
+    [fausseFromage1, fausseFromage2],
+    [fausseGarniture1, fausseGarniture2],
+    18
+)
+var listePizzas = [faussePizza1, faussePizza2, faussePizza3];
+var listePizzasChoisis = [];
+
+var fausseClient1 = new Client("Eliot", "Billy", 4501231234, "be@mail.ca");
+var fausseClient2 = new Client("Uzumaki", "Naruto", 4507896789, "nu@mail.ca");
+var fausseClient3 = new Client("Uchiha", "Sasuke", 4501582765, "su@mail.ca");
+var listeClients = [fausseClient1, fausseClient2, fausseClient3];
+
