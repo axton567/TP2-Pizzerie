@@ -122,16 +122,16 @@ class Pizza {
     }
     lireFromage() {
         var s = "";
-        for (const i in this.fromage) {
-            s += "{" + this.fromage[i].lectureFromage() + "}, ";
+        for (var i = 0; i < listeFromagesChoisis.length; i++) {
+            s += "{" + listeFromages[listeFromagesChoisis[i]].lectureFromage() + "}, ";
         }
         s = s.substr(0, s.length - 2);
         return s;
     }
     lireGarniture() {
         var s = "";
-        for (const i in this.garniture) {
-            s += "{" + this.garniture[i].lectureGarniture() + "}, ";
+        for (var i = 0; i < listeGarnituresChoisis.length; i++) {
+            s += "{" + listeGarnitures[listeGarnituresChoisis[i]].lectureGarniture() + "}, ";
         }
         s = s.substr(0, s.length - 2);
         return s;
@@ -162,11 +162,11 @@ class Pizza {
         var garniture = 0;
         var i = 0;
 
-        for (i = 0; i < this.fromage.length; i++) {
-            fromage += this.fromage[i].prix;
+        for (i = 0; i < listeFromagesChoisis.length; i++) {
+            fromage += listeFromages[listeFromagesChoisis[i]].prix;
         }
-        for (i = 0; i < this.garniture.length; i++) {
-            garniture += this.garniture[i].prix;
+        for (i = 0; i < listeGarnituresChoisis.length; i++) {
+            garniture += listeGarnitures[listeGarnituresChoisis[i]].prix;
         }
 
         this.prixComplet = this.croute.prix + (fromage * this.taille.facteur) + (garniture * this.taille.facteur);
@@ -197,8 +197,8 @@ class Commande {
     }
     lirePizza() {
         var s = "";
-        for (const i in this.pizza) {
-            s += "{" + this.pizza[i].lecturePizza() + "}, ";
+        for (var i = 0; i < listePizzasChoisis.length; i++) {
+            s += "{" + listePizzas[listePizzasChoisis[i]].lecturePizza() + "}, ";
         }
         s = s.substr(0, s.length - 2);
         return s;
@@ -207,8 +207,8 @@ class Commande {
         this.pizza[this.pizza.length] = pizzaSupplémentaire;
     }
     prixTotal() {
-        for (var i = 0; i < this.pizza.length; i++) {
-            this.montantTotal += this.pizza[i].prixComplet;
+        for (var i = 0; i < listePizzasChoisis.length; i++) {
+            this.montantTotal += listePizzas[listePizzasChoisis[i]].prixComplet;
         }
         var montantTps = this.montantTotal * this.tps;
         var montantTvq = this.montantTotal * this.tvq;
@@ -373,4 +373,3 @@ var fausseClient1 = new Client("Eliot", "Billy", 4501231234, "be@mail.ca");
 var fausseClient2 = new Client("Uzumaki", "Naruto", 4507896789, "nu@mail.ca");
 var fausseClient3 = new Client("Uchiha", "Sasuke", 4501582765, "su@mail.ca");
 var listeClients = [fausseClient1, fausseClient2, fausseClient3];
-

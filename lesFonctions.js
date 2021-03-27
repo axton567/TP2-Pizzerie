@@ -85,7 +85,7 @@ function chargerListeSelect(selectId, liste) {
     element.innerHTML = s;
 }
 function ajouterAliments(liste, selectId, pId) {
-    liste[liste.length] = document.getElementById(selectId).value;
+    liste[liste.length] = (document.getElementById(selectId).value);
     document.getElementById(pId).innerHTML = liste;
 }
 function effacerAliments(liste, pId) {
@@ -202,21 +202,36 @@ function soumettreClient(sallo, t, g, e) {
     objet.appendChild(texte);
     div.appendChild(objet);
 }
+function soumettrePizza(sallo, t, g, d, j, k) {
+    entrer = document.getElementById(sallo).value;
+    entrer1 = document.getElementById(t).value;
+    entrer2 = document.getElementById(g).value;
+    entrer3 = document.getElementById(d).value;                                                                  
+    entrer4 = document.getElementById(j).value;
+    entrer5 = document.getElementById(k).value;
+    console.log(entrer,entrer1,entrer2,entrer3,entrer4,entrer5);
+    instancePizza = new Pizza(entrer, listeTailles[entrer1], listeCroutes[entrer2], listeFromagesChoisis[entrer3], listeGarnituresChoisis[entrer4],entrer5);
+    msg = instancePizza.lecturePizza();
+    div = document.getElementById("verifier");
+    objet = document.createElement("a");
+    texte = document.createTextNode(msg);
+    objet.appendChild(texte);
+    div.appendChild(objet);
+}
 function soumettreCommande(sallo, t, g, d, j) {
     entrer = document.getElementById(sallo).value;
     entrer1 = document.getElementById(t).value;
     entrer2 = document.getElementById(g).value;
     entrer3 = document.getElementById(d).value;
     entrer4 = document.getElementById(j).value;
-
-    instanceCommande = new Commande(entrer, listeClients[entrer1], entrer2, entrer3,entrer4);
+    console.log(entrer,entrer1,entrer2,entrer3,entrer4);
+    instanceCommande = new Commande(entrer, listeClients[entrer1], entrer2, entrer3,listePizzasChoisis[entrer4]);
     msg = instanceCommande.lectureCommande();
     div = document.getElementById("verifier");
     objet = document.createElement("a");
     texte = document.createTextNode(msg);
     objet.appendChild(texte);
     div.appendChild(objet);
-
 }
 
 // Code pour tester les fonctions.
