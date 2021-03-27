@@ -36,11 +36,11 @@
         </tr>
         <tr>
             <td><label for="dateCommande">Date:</label></td>
-            <td><input id="dateCommande" name="dateCommande" placeholder="AAAA-MM-DD"></input></td>
+            <td><input id="dateCommande" name="dateCommande"></input></td>
         </tr>
         <tr>
             <td><label for="heuresCommande">Heures:</label></td>
-            <td><input id="heuresCommande" name="heuresCommande" placeholder="hh:mm"></input></td>
+            <td><input id="heuresCommande" name="heuresCommande" ></input></td>
         </tr>
         <tr>
             <td><label for="pizzaCommande">Pizzas:</label></td>
@@ -64,11 +64,12 @@
         </tr>
         <tr>
             <td colspan="2"><button id="btn2" type="button"
-                    onclick="soumettreCommande('numeroCommande','nomClient','dateCommande','heuresCommande','pizzaCommande')">Soumettre</button>
+                    onclick="soumettreCommande('numeroCommande','nomClient','dateCommande','heuresCommande','pizzaCommande');afficherMontant()">Soumettre</button>
             </td>
         </tr>
     </table>
     <div id="verifier"></div>
+    <div id="soumettre"></div>
 </body>
 <script>
     chargerListeSelect("nomClient", listeClients);

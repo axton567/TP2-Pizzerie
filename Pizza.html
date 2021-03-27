@@ -26,7 +26,7 @@
     <table>
         <tr>
             <td><label for="numeroPizza">Numéro:</label></td>
-            <td><input id="numeroPizza" name="numeroPizza" placeholder="Entrer un numéro de pizza"></input></td>
+            <td><input id="numeroPizza" name="numeroPizza"></input></td>
         </tr>
         <tr>
             <td><label for="taillePizza">Taille:</label></td>
@@ -63,12 +63,12 @@
         </tr>
         <tr>
             <td><label for="tempCuisson">Temps de cuisson:</label></td>
-            <td><input id="tempCuisson" name="tempCuisson" placeholder="Entrer un temps de cuisson">(minutes)</input>
+            <td><input id="tempCuisson" name="tempCuisson">(minutes)</input>
             </td>
         </tr>
         <tr>
             <td><label for="prixPizza">Prix:</label></td>
-            <td><input id="prixPizza" name="prixPizza" readonly>à calculer</input> </td>
+            <td><input id="prixPizza"  name="prixPizza" readonly>à calculer</input> </td>
         </tr>
         <tr>
             <td colspan="2"><button id="btn5" type="button"
@@ -79,10 +79,11 @@
         </tr>
         <tr>
             <td colspan="2"><button id="btn6" type="button" 
-                onclick="soumettrePizza('numeroPizza','taillePizza','croutePizza','fromagePizza','garniturePizza','tempCuisson')">Soumettre</button></td>
+                onclick="soumettrePizza('numeroPizza','taillePizza','croutePizza','fromagePizza','garniturePizza','tempCuisson');afficherPrix()">Soumettre</button></td>
         </tr>
     </table>
     <div id="verifier"></div>
+    <div id="soumettre"></div>
 </body>
 
 <script>
