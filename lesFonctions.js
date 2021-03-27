@@ -150,90 +150,93 @@ function verificationEntrer(selectId, txt) {
         div.appendChild(objet);
     }
 }
-function soumettreFromage(sallo, t, g) {
-    entrer = document.getElementById(sallo).value;
-    entrer1 = document.getElementById(t).value;
-    entrer2 = document.getElementById(g).value;
+function soumettreFromage(selectId, selectId1, selectId2) {
+    entrer = document.getElementById(selectId).value;
+    entrer1 = document.getElementById(selectId1).value;
+    entrer2 = document.getElementById(selectId2).value;
     instanceFromage = new Fromage(entrer, entrer1, entrer2);
-    msg = instanceFromage.lectureFromage();
-    div = document.getElementById("verifier");
+    string = instanceFromage.lectureFromage();
+    div = document.getElementById("soumettre");
     objet = document.createElement("a");
-    texte = document.createTextNode(msg + ',');
+    texte = document.createTextNode(string + ',');
     objet.appendChild(texte);
     div.appendChild(objet);
 }
-function soumettreGarniture(sallo, t, g) {
-    entrer = document.getElementById(sallo).value;
-    entrer1 = document.getElementById(t).value;
-    entrer2 = document.getElementById(g).value;
+function soumettreGarniture(selectId, selectId1, selectId2) {
+    entrer = document.getElementById(selectId).value;
+    entrer1 = document.getElementById(selectId1).value;
+    entrer2 = document.getElementById(selectId2).value;
     instanceGarniture = new Garniture(entrer, entrer1, entrer2);
-    msg = instanceGarniture.lectureGarniture();
-    div = document.getElementById("verifier");
+    string = instanceGarniture.lectureGarniture();
+    div = document.getElementById("soumettre");
     objet = document.createElement("a");
-    texte = document.createTextNode(msg + ',');
+    texte = document.createTextNode(string + ',');
     objet.appendChild(texte);
     div.appendChild(objet);
 }
-function soumettreCroute(sallo, t, g, d, j) {
-    entrer = document.getElementById(sallo).value;
-    entrer1 = document.getElementById(t).value;
-    entrer2 = document.getElementById(g).value;
-    entrer3 = document.getElementById(d).value;
-    entrer4 = document.getElementById(j).value;
+function soumettreCroute(selectId, selectId1, selectId2, selectId3, selectId4) {
+    entrer = document.getElementById(selectId).value;
+    entrer1 = document.getElementById(selectId1).value;
+    entrer2 = document.getElementById(selectId2).value;
+    entrer3 = document.getElementById(selectId3).value;
+    entrer4 = document.getElementById(selectId4).value;
     instanceCroute = new Croute(entrer, entrer1, entrer2, entrer3, entrer4);
-    msg = instanceCroute.lectureCroute();
-    div = document.getElementById("verifier");
+    string = instanceCroute.lectureCroute();
+    div = document.getElementById("soumettre");
     objet = document.createElement("a");
-    texte = document.createTextNode(msg + ',');
+    texte = document.createTextNode(string + ',');
     objet.appendChild(texte);
     div.appendChild(objet);
     console.log(instanceCroute);
 }
-function soumettreClient(sallo, t, g, e) {
-    entrer = document.getElementById(sallo).value;
-    entrer1 = document.getElementById(t).value;
-    entrer2 = document.getElementById(g).value;
-    entrer3 = document.getElementById(e).value;
+function soumettreClient(selectId, selectId1, selectId2, selectId3) {
+    entrer = document.getElementById(selectId).value;
+    entrer1 = document.getElementById(selectId1).value;
+    entrer2 = document.getElementById(selectId2).value;
+    entrer3 = document.getElementById(selectId3).value;
     instanceClient = new Client(entrer, entrer1, entrer2, entrer3);
-    msg = instanceClient.lectureClient();
-    div = document.getElementById("verifier");
+    string = instanceClient.lectureClient();
+    div = document.getElementById("soumettre");
     objet = document.createElement("a");
-    texte = document.createTextNode(msg + ',');
+    texte = document.createTextNode(string + ',');
     objet.appendChild(texte);
     div.appendChild(objet);
 }
-function soumettrePizza(sallo, t, g, d, j, k) {
-    entrer = document.getElementById(sallo).value;
-    entrer1 = document.getElementById(t).value;
-    entrer2 = document.getElementById(g).value;
-    entrer3 = document.getElementById(d).value;                                                                  
-    entrer4 = document.getElementById(j).value;
-    entrer5 = document.getElementById(k).value;
-    console.log(entrer,entrer1,entrer2,entrer3,entrer4,entrer5);
-    instancePizza = new Pizza(entrer, listeTailles[entrer1], listeCroutes[entrer2], listeFromagesChoisis[entrer3], listeGarnituresChoisis[entrer4],entrer5);
-    msg = instancePizza.lecturePizza();
-    div = document.getElementById("verifier");
+function soumettrePizza(selectId, selectId1, selectId2, selectId3, selectId4, selectId5) {
+    entrer = document.getElementById(selectId).value;
+    entrer1 = document.getElementById(selectId1).value;
+    entrer2 = document.getElementById(selectId2).value;
+    entrer3 = document.getElementById(selectId3).value;
+    entrer4 = document.getElementById(selectId4).value;
+    entrer5 = document.getElementById(selectId5).value;
+    instancePizza = new Pizza(entrer, listeTailles[entrer1], listeCroutes[entrer2], listeFromagesChoisis[entrer3], listeGarnituresChoisis[entrer4], entrer5);
+    string = instancePizza.lecturePizza();
+    div = document.getElementById("soumettre");
     objet = document.createElement("a");
-    texte = document.createTextNode(msg);
+    texte = document.createTextNode(string);
     objet.appendChild(texte);
     div.appendChild(objet);
 }
-function soumettreCommande(sallo, t, g, d, j) {
-    entrer = document.getElementById(sallo).value;
-    entrer1 = document.getElementById(t).value;
-    entrer2 = document.getElementById(g).value;
-    entrer3 = document.getElementById(d).value;
-    entrer4 = document.getElementById(j).value;
-    console.log(entrer,entrer1,entrer2,entrer3,entrer4);
-    instanceCommande = new Commande(entrer, listeClients[entrer1], entrer2, entrer3,listePizzasChoisis[entrer4]);
-    msg = instanceCommande.lectureCommande();
-    div = document.getElementById("verifier");
+function soumettreCommande(selectId, selectId1, selectId2, selectId3, selectId4) {
+    entrer = document.getElementById(selectId).value;
+    entrer1 = document.getElementById(selectId1).value;
+    entrer2 = document.getElementById(selectId2).value;
+    entrer3 = document.getElementById(selectId3).value;
+    entrer4 = document.getElementById(selectId4).value;
+    instanceCommande = new Commande(entrer, listeClients[entrer1], entrer2, entrer3, listePizzasChoisis[entrer4]);
+    string = instanceCommande.lectureCommande();
+    div = document.getElementById("soumettre");
     objet = document.createElement("a");
-    texte = document.createTextNode(msg);
+    texte = document.createTextNode(string);
     objet.appendChild(texte);
     div.appendChild(objet);
 }
-
+function afficherMontant() {
+    document.getElementById("montantTotal").value = instanceCommande.lireMontant();
+}
+function afficherPrix() {
+    document.getElementById("prixPizza").value = instancePizza.lirePrix();
+}
 // Code pour tester les fonctions.
 /*
 function testVerifierNumeroDeTelephone(entree, attendu) {

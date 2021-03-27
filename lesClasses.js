@@ -107,11 +107,13 @@ class Pizza {
         this.tempsCuisson = tempsCuisson;
         this.prixComplet = 0;
         this.prixCompletPizza();
+
     }
     lireNom() {
         return "Pizza #" + this.numeroPizza;
     }
     lecturePizza() {
+
         return "Numéro de pizza: " + this.numeroPizza +
             ", taille de la Pizza: {" + this.taille.lectureTaille() + "}" +
             ", type de croûte: {" + this.croute.lectureCroute() + "}" +
@@ -121,20 +123,42 @@ class Pizza {
             ", Temps de cuisson: " + this.tempsCuisson;
     }
     lireFromage() {
-        var s = "";
-        for (var i = 0; i < listeFromagesChoisis.length; i++) {
-            s += "{" + listeFromages[listeFromagesChoisis[i]].lectureFromage() + "}, ";
+        if (listeFromagesChoisis == 0) {
+            var s = "";
+            for (var i = 0; i < this.fromage.length; i++) {
+                s += "{" + this.fromage[i].lectureFromage() + "}, ";
+            }
+            s = s.substr(0, s.length - 2);
+            return s;
+        } else {
+            var s = "";
+            for (var i = 0; i < listeFromagesChoisis.length; i++) {
+                s += "{" + listeFromages[listeFromagesChoisis[i]].lectureFromage() + "}, ";
+            }
+            s = s.substr(0, s.length - 2);
+            return s;
         }
-        s = s.substr(0, s.length - 2);
-        return s;
+
     }
     lireGarniture() {
-        var s = "";
-        for (var i = 0; i < listeGarnituresChoisis.length; i++) {
-            s += "{" + listeGarnitures[listeGarnituresChoisis[i]].lectureGarniture() + "}, ";
+        if (listeFromagesChoisis == 0) {
+            var s = "";
+            for (var i = 0; i < this.garniture.length; i++) {
+                s += "{" + this.garniture[i].lectureGarniture() + "}, ";
+            }
+            s = s.substr(0, s.length - 2);
+            return s;
+        } else {
+            var s = "";
+            for (var i = 0; i < listeGarnituresChoisis.length; i++) {
+                s += "{" + listeGarnitures[listeGarnituresChoisis[i]].lectureGarniture() + "}, ";
+            }
+            s = s.substr(0, s.length - 2);
+            return s;
         }
-        s = s.substr(0, s.length - 2);
-        return s;
+    }
+    lirePrix() {
+        return this.prixComplet;
     }
     modifierTaillePizza(nouvelleTaille) {
         this.taille = nouvelleTaille;
@@ -158,16 +182,28 @@ class Pizza {
         this.fromage[this.fromage.length] = fromageSupplémentaire;
     }
     prixCompletPizza() {
-        var fromage = 0;
-        var garniture = 0;
-        var i = 0;
+        if (listeFromagesChoisis == 0) {
+            var i = 0;
+            var fromage = 0;
+            var garniture = 0;
+            for (i = 0; i < this.fromage.length; i++) {
+                fromage += this.fromage[i].prix;
+            }
+            for (i = 0; i < this.garniture.length; i++) {
+                garniture += this.garniture[i].prix;
+            }
+        } else {
+            var i = 0;
+            var fromage = 0;
+            var garniture = 0;
+            for (i = 0; i < listeFromagesChoisis.length; i++) {
+                fromage += listeFromages[listeFromagesChoisis[i]].prix;
+            }
+            for (i = 0; i < listeGarnituresChoisis.length; i++) {
+                garniture += listeGarnitures[listeGarnituresChoisis[i]].prix;
+            }
+        }
 
-        for (i = 0; i < listeFromagesChoisis.length; i++) {
-            fromage += listeFromages[listeFromagesChoisis[i]].prix;
-        }
-        for (i = 0; i < listeGarnituresChoisis.length; i++) {
-            garniture += listeGarnitures[listeGarnituresChoisis[i]].prix;
-        }
 
         this.prixComplet = this.croute.prix + (fromage * this.taille.facteur) + (garniture * this.taille.facteur);
         return this.prixComplet;
@@ -189,10 +225,10 @@ class Commande {
     }
     lectureCommande() {
         return "Numéro de commande: " + this.numeroCommande +
-            ", client: {" +  this.client.lectureClient()+ "}" +
+            ", client: {" + this.client.lectureClient() + "}" +
             ", date de la commande: " + this.dateCommande +
             ", heure de la commande: " + this.heureCommande +
-            ", les pizzas: [" +  this.lirePizza() + "]" +
+            ", les pizzas: [" + this.lirePizza() + "]" +
             ", montant total de la facture: " + this.montantTotal;
     }
     lirePizza() {
@@ -202,6 +238,9 @@ class Commande {
         }
         s = s.substr(0, s.length - 2);
         return s;
+    }
+    lireMontant() {
+        return this.montantTotal;
     }
     ajouterPizza(pizzaSupplémentaire) {
         this.pizza[this.pizza.length] = pizzaSupplémentaire;
@@ -215,19 +254,20 @@ class Commande {
         this.montantTotal += (montantTps + montantTvq);
         return this.montantTotal;
     }
+
 }
 
 class Client {
-    constructor(nom, prénom, numeroTelephone, adresseCouriel) {
+    constructor(nom, prénom, numeroTelephone, adresseCourriel) {
         this.nom = nom;
         this.prenom = prénom;
         this.numeroTelephone = numeroTelephone;
-        this.adresseCouriel = adresseCouriel;
+        this.adresseCourriel = adresseCourriel;
 
     }
     lectureClient() {
-        return "\nNom du client: " + this.nom + "\nPrénom du client: " + this.prenom + "\nNuméro de Téléphone: " + this.numeroTelephone +
-            "\nAdresse couriel: " + this.adresseCouriel;
+        return "nom: " + this.nom + ", prénom: " + this.prenom + ", numéro de téléphone: " + this.numeroTelephone +
+            ", adresse courriel: " + this.adresseCourriel;
     }
     modifierNomClient(nouveauNom) {
         this.nom = nouveauNom;
@@ -238,8 +278,8 @@ class Client {
     modifierNumeroClient(nouveauNumeroTelephone) {
         this.numeroTelephone = nouveauNumeroTelephone;
     }
-    modifierAdresseClient(nouvelleAdresseCouriel) {
-        this.adresseCouriel = nouvelleAdresseCouriel;
+    modifierAdresseClient(nouvelleAdresseCourriel) {
+        this.adresseCourriel = nouvelleAdresseCourriel;
     }
     lireNom() {
         return this.prenom + " " + this.nom;
