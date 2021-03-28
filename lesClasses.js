@@ -123,7 +123,7 @@ class Pizza {
             ", Temps de cuisson: " + this.tempsCuisson;
     }
     lireFromage() {
-        if (listeFromagesChoisis == "") {
+        if (listeFromagesChoisis == "" && listeGarnituresChoisis == "") {
             var s = "";
             for (var i = 0; i < this.fromage.length; i++) {
                 s += "{" + this.fromage[i].lectureFromage() + "}, ";
@@ -141,7 +141,7 @@ class Pizza {
 
     }
     lireGarniture() {
-        if (listeFromagesChoisis == "") {
+        if (listeFromagesChoisis == "" && listeGarnituresChoisis == "") {
             var s = "";
             for (var i = 0; i < this.garniture.length; i++) {
                 s += "{" + this.garniture[i].lectureGarniture() + "}, ";
@@ -182,7 +182,7 @@ class Pizza {
         this.fromage[this.fromage.length] = fromageSupplémentaire;
     }
     prixCompletPizza() {
-        if (listeFromagesChoisis == "") {
+        if (listeFromagesChoisis == "" && listeGarnituresChoisis == "") {
             var i = 0;
             var fromage = 0;
             var garniture = 0;
