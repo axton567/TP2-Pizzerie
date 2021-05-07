@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="../static/lesFonctions.js"></script>
+    <script src="../static/lesClasses.js"></script>
+    <style>
+        .cache {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- section menu -->
+    <ul style="list-style-type: none;">
+        <li style="float:left;"><a href="commande">Commande</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="client">Client</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="pizza">Pizza</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li><a href="#" onclick="afficherOuCacher()">Aliments</a>
+            <ul id="sousmenu" style="list-style-type: none;" class="cache">
+                <li style="float:left;"><a href="croute">Croute</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li style="float:left;"><a href="fromage">Fromage</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li><a href="garniture">Garniture</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <!-- section formulaire -->
+    <h2>Garniture</h2>
+    <table border="0">
+        <tr>
+            <td><label for="nomGarniture">Nom:</label></td>
+            <td><input id="nomGarniture"> </input></td>
+        </tr>
+        <tr>
+            <td><label for="poidsGarniture">Poids:</label></td>
+            <td><input id="poidsGarniture"> </input>(gr)</td>
+        </tr>
+        <tr>
+            <td><label for="prixGarniture">Prix:</label></td>
+            <td><input id="prixGarniture"> </input></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="button" id="btnInstancier" onclick="instancier()">Instancier</button>
+            </td>
+        </tr>
+    </table>
+
+    <p id="retour"> 
+    </p>
+
+    <form id="frmGarniture" action="#" method="post" hidden>
+        <textarea rows="2" cols="60" id="instanceGarniture" name="instanceGarniture" readonly></textarea>
+        <br>
+        <input type="submit" id="btnEnregistrer" value="Enregistrer"/>
+    </form>
+
+</body>
+
+<script>
+    function instancier() {
+        var retour = document.getElementById("retour");
+        retour.innerHTML = "";
+
+        if (document.getElementById("nomGarniture").value.length == 0) {
+            retour.innerHTML = "Erreur: Nom de la Garniture vide";
+        }
+        else if (document.getElementById("poidsGarniture").value.length == 0) {
+            retour.innerHTML = "Erreur: Poids de la Garniture vide";
+        }
+        else if (document.getElementById("prixGarniture").value.length == 0) {
+            retour.innerHTML = "Erreur: Prix de la Garniture vide";
+        }
+        else {
+            instancierGarniture();
+        }
+ 
+    }
+
+    function instancierGarniture() {
+        var g1 = new Garniture(
+            document.getElementById("nomGarniture").value,
+            parseInt(document.getElementById("poidsGarniture").value),
+            parseInt(document.getElementById("prixGarniture").value)
+        );
+
+        document.getElementById("instanceGarniture").value = JSON.stringify(g1);
+        if(document.getElementById("instanceGarniture").value != ""){
+            document.getElementById("frmGarniture").hidden = false;
+        }
+    }
+</script>
+
+</html>

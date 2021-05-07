@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="../static/lesFonctions.js"></script>
+    <script src="../static/lesClasses.js"></script>
+    <style>
+        .cache {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- section menu -->
+    <ul style="list-style-type: none;">
+        <li style="float:left;"><a href="commande">Commande</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="client">Client</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="pizza">Pizza</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li><a href="#" onclick="afficherOuCacher()">Aliments</a>
+            <ul id="sousmenu" style="list-style-type: none;" class="cache">
+                <li style="float:left;"><a href="croute">Croute</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li style="float:left;"><a href="fromage">Fromage</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li><a href="garniture">Garniture</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <!-- section formulaire -->
+    <h2>Client</h2>
+    <table border="0">
+        <tr>
+            <td><label for="prenomClient">Prénom:</label></td>
+            <td><input id="prenomClient"></input></td>
+        </tr>
+        <tr>
+            <td><label for="nomClient">Nom:</label></td>
+            <td><input id="nomClient"></input></td>
+        </tr>
+        <tr>
+            <td><label for="telClient">Téléphone:</label></td>
+            <td><input id="telClient"></input></td>
+        </tr>
+        <tr>
+            <td><label for="courrielClient">Adresse courriel:</label></td>
+            <td><input id="courrielClient"></input></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="button" id="btnInstancier" onclick="instancier()">Instancier</button>
+            </td>
+        </tr>
+    </table>
+
+    <p id="retour"> 
+    </p>
+
+    <form id="frmClient" action="#" method="post" hidden>
+        <textarea rows="4" cols="60" id="instanceClient" name="instanceClient" readonly></textarea>
+        <br>
+        <input type="submit" id="btnEnregistrer" value="Enregistrer"/>
+    </form>
+
+</body>
+
+<script>
+    function instancier() {
+        var retour = document.getElementById("retour");
+        retour.innerHTML = "";
+
+        if (document.getElementById("prenomClient").value.length == 0) {
+            retour.innerHTML = "Erreur: Prénom du Client vide";
+        }
+        else if (document.getElementById("nomClient").value.length == 0) {
+            retour.innerHTML = "Erreur: Nom du Client vide";
+        }
+        else if (document.getElementById("telClient").value.length == 0) {
+            retour.innerHTML = "Erreur: Téléphone du Client vide";
+        }
+        else if (document.getElementById("courrielClient").value.length == 0) {
+            retour.innerHTML = "Erreur: Adresse courriel du Client vide";
+        }
+        else {
+            instancierClient();
+        }
+ 
+    }
+
+    function instancierClient() {
+        var c1 = new Client(
+            document.getElementById("nomClient").value,
+            document.getElementById("prenomClient").value,
+            document.getElementById("telClient").value,
+            document.getElementById("courrielClient").value
+        );
+
+        document.getElementById("instanceClient").value = JSON.stringify(c1);
+        if(document.getElementById("instanceClient").value != ""){
+            document.getElementById("frmClient").hidden = false;
+        }
+    }
+</script>
+
+</html>

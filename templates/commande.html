@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="../static/lesFonctions.js"></script>
+    <script src="../static/lesClasses.js"></script>
+    <style>
+        .cache {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- section menu -->
+    <ul style="list-style-type: none;">
+        <li style="float:left;"><a href="commande">Commande</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="client">Client</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="pizza">Pizza</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li><a href="#" onclick="afficherOuCacher()">Aliments</a>
+            <ul id="sousmenu" style="list-style-type: none;" class="cache">
+                <li style="float:left;"><a href="croute">Croute</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li style="float:left;"><a href="fromage">Fromage</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li><a href="garniture">Garniture</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <!-- section formulaire -->
+    <h2>Commande</h2>
+    <table border="0">
+        <tr>
+            <td><label for="numeroCommande">Numéro:</label></td>
+            <td><input id="numeroCommande"></input></td>
+        </tr>
+        <tr>
+            <td><label for="clientCommande">Client:</label></td>
+            <td><select id="clientCommande">
+                    <option></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="dateCommande">Date:</label></td>
+            <td><input id="dateCommande"></input></td>
+        </tr>
+        <tr>
+            <td><label for="heureCommande">Heure:</label></td>
+            <td><input id="heureCommande"></input></td>
+        </tr>
+        <tr>
+            <td><label for="pizzasCommande">Pizzas:</label></td>
+            <td><select id="pizzaCommande">
+                    <option></option>
+                </select>
+                <button type="button" id="btnAjouterPizza" onclick="ajouterPizza()">+</button>
+                <button type="button" id="btnViderPizzas" onclick="viderPizzas()">-</button>
+                <p id="pizzasCommande"></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="button" id="btnInstancier" onclick="instancier()">Instancier</button>
+            </td>
+        </tr>
+    </table>
+
+    <p id="retour">
+    </p>
+
+    <form id="frmCommande" action="#" method="post" hidden>
+        <textarea rows="10" cols="100" id="instanceCommande" name="instanceCommande" readonly></textarea>
+        <br>
+        <input type="submit" id="btnEnregistrer" value="Enregistrer"/>
+    </form>
+
+</body>
+
+<script>
+
+    //Charger listes en mémoire
+    var listeClients = parseListe("CLIENT",'{{listePyClients|tojson}}');
+    var listePizzas = parseListe("PIZZA",'{{listePyPizzas|tojson}}');
+
+    var listePizzasChoisies = [];
+
+    function parseListe(type, stringJson){
+        var listeJson = JSON.parse(stringJson);
+        var liste = [];
+        for(temp of listeJson){
+            switch(type){
+                case "CLIENT":
+                    var t = new Client(temp["nom"], temp["prenom"], temp["telephone"], temp["courriel"]);
+                    break;
+                case "PIZZA":
+                    var taille = new Taille(temp["taille"]["nom"],temp["taille"]["diametre"],temp["taille"]["facteur"]);
+                    var croute = new Croute(temp["croute"]["nom"], temp["croute"]["poids"], temp["croute"]["type"], temp["croute"]["prix"], temp["croute"]["taille"]);
+                    var fromages = [];
+                    for(f of temp["fromages"]){
+                        var fromage = new Fromage(f["nom"], f["poids"], f["prix"]);
+                        fromages.push(fromage);
+                    }
+                    var garnitures = [];
+                    for(g of temp["garnitures"]){
+                        var garniture = new Garniture(g["nom"], g["poids"], g["prix"]);
+                        garnitures.push(garniture);
+                    }
+                    var t = new Pizza(temp["numero"], taille, croute, fromages, garnitures, temp["tempsCuisson"], temp["prixComplet"]);
+                    break;
+            }
+            liste.push(t);
+        }
+        return liste;
+    }
+
+    function ajouterPizza() {
+        var retour = document.getElementById("retour");
+        var entree = document.getElementById("pizzaCommande");
+
+        retour.innerHTML = "";
+        if (entree.value == "") {
+            retour.innerHTML = "Erreur: Pizza vide";
+        }
+        else {
+            listePizzasChoisies.push(entree.value);
+            document.getElementById("pizzasCommande").innerHTML = listePizzasChoisies;
+        }
+        
+    }
+
+    function viderPizzas(){
+        listePizzasChoisies = [];
+        document.getElementById("pizzasCommande").innerHTML = listePizzasChoisies;
+        document.getElementById("retour").innerHTML = "";
+    }
+
+    function instancier() {
+
+        var retour = document.getElementById("retour");
+        retour.innerHTML = "";
+
+        if (document.getElementById("numeroCommande").value.length == 0) {
+            retour.innerHTML = "Erreur: Numéro de la Commande vide";
+        }
+        else if (document.getElementById("clientCommande").value.length == 0) {
+            retour.innerHTML = "Erreur: Client vide";
+        }
+        else if (document.getElementById("dateCommande").value.length == 0) {
+            retour.innerHTML = "Erreur: Date de la commande vide";
+        }
+        else if (document.getElementById("heureCommande").value.length == 0) {
+            retour.innerHTML = "Erreur: Heure de la commande vide";
+        }
+        else if (listePizzasChoisies.length == 0) {
+            retour.innerHTML = "Erreur: Liste de pizzas vide";
+        }
+        else {
+            instancierCommande();
+        }
+
+    }
+
+    function instancierCommande() {
+        var com1 = new Commande(
+            document.getElementById("numeroCommande").value,
+            listeClients[document.getElementById("clientCommande").value],
+            document.getElementById("dateCommande").value,
+            document.getElementById("heureCommande").value,
+            genererListe(listePizzasChoisies, listePizzas)
+        );
+
+        document.getElementById("instanceCommande").value = JSON.stringify(com1);
+        if(document.getElementById("instanceCommande").value != ""){
+            document.getElementById("frmCommande").hidden = false;
+        }
+    }
+</script>
+</html>

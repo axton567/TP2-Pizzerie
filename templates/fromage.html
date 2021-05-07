@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="../static/lesFonctions.js"></script>
+    <script src="../static/lesClasses.js"></script>
+    <style>
+        .cache {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- section menu -->
+    <ul style="list-style-type: none;">
+        <li style="float:left;"><a href="commande">Commande</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="client">Client</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="pizza">Pizza</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li><a href="#" onclick="afficherOuCacher()">Aliments</a>
+            <ul id="sousmenu" style="list-style-type: none;" class="cache">
+                <li style="float:left;"><a href="croute">Croute</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li style="float:left;"><a href="fromage">Fromage</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li><a href="garniture">Garniture</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <!-- section formulaire -->
+    <h2>Fromage</h2>
+    <table border="0">
+        <tr>
+            <td><label for="nomFromage">Nom:</label></td>
+            <td><input id="nomFromage"> </input></td>
+        </tr>
+        <tr>
+            <td><label for="poidsFromage">Poids:</label></td>
+            <td><input id="poidsFromage"> </input>(gr)</td>
+        </tr>
+        <tr>
+            <td><label for="prixFromage">Prix:</label></td>
+            <td><input id="prixFromage"> </input></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="button" id="btnInstancier" onclick="instancier()">Instancier</button>
+            </td>
+        </tr>
+    </table>
+
+    <p id="retour">
+    </p>
+
+    <form id="frmFromage" action="#" method="post" hidden>
+        <textarea rows="2" cols="60" id="instanceFromage" name="instanceFromage" readonly></textarea>
+        <br>
+        <input type="submit" id="btnEnregistrer" value="Enregistrer"/>
+    </form>
+
+</body>
+
+<script>
+    function instancier() {
+        var retour = document.getElementById("retour");
+        retour.innerHTML = "";
+
+        if (document.getElementById("nomFromage").value.length == 0) {
+            retour.innerHTML = "Erreur: Nom du Fromage vide";
+        }
+        else if (document.getElementById("poidsFromage").value.length == 0) {
+            retour.innerHTML = "Erreur: Poids du Fromage vide";
+        }
+        else if (document.getElementById("prixFromage").value.length == 0) {
+            retour.innerHTML = "Erreur: Prix du Fromage vide";
+        }
+        else {
+            instancierFromage();
+        }
+ 
+    }
+
+    function instancierFromage() {
+        var f1 = new Fromage(
+            document.getElementById("nomFromage").value,
+            parseInt(document.getElementById("poidsFromage").value),
+            parseInt(document.getElementById("prixFromage").value)
+        );
+
+        document.getElementById("instanceFromage").value = JSON.stringify(f1);
+        if(document.getElementById("instanceFromage").value != ""){
+            document.getElementById("frmFromage").hidden = false;
+        }
+    }
+
+</script>
+
+</html>

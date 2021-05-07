@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="../static/lesFonctions.js"></script>
+    <script src="../static/lesClasses.js"></script>
+    <style>
+        .cache {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- section menu -->
+    <ul style="list-style-type: none;">
+        <li style="float:left;"><a href="commande">Commande</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="client">Client</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li style="float:left;"><a href="pizza">Pizza</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li><a href="#" onclick="afficherOuCacher()">Aliments</a>
+            <ul id="sousmenu" style="list-style-type: none;" class="cache">
+                <li style="float:left;"><a href="croute">Croute</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li style="float:left;"><a href="fromage">Fromage</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li><a href="garniture">Garniture</a></li>
+            </ul>
+        </li>
+
+    </ul>
+
+    <!-- section formulaire -->
+    <h2>Pizza</h2>
+    <table border="0">
+        <tr>
+            <td><label for="numeroPizza">Numéro:</label></td>
+            <td><input id="numeroPizza"></input></td>
+        </tr>
+        <tr>
+            <td><label for="taillePizza">Taille:</label></td>
+            <td><select id="taillePizza">
+                    <option></option>
+                    {% for i in range(listePyTailles|length) %}
+                        <option value="{{ i }}">{{ listePyTailles[i]["nom"] }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="croutePizza">Croute:</label></td>
+            <td><select id="croutePizza">
+                    <option></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="fromagesPizza">Fromages:</label></td>
+            <td><select id="fromagePizza">
+                    <option></option>            
+                </select>
+                <button type="button" id="btnAjouterFromage" onclick="ajouterFromage()">+</button>
+                <button type="button" id="btnViderFromages" onclick="viderFromages()">-</button>
+                <p id="fromagesPizza"></p>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="garnituresPizza">Garnitures:</label></td>
+            <td><select id="garniturePizza">
+                    <option></option>
+                </select>
+                <button type="button" id="btnAjouterGarniture" onclick="ajouterGarniture()">+</button>
+                <button type="button" id="btnViderGarnitures" onclick="viderGarnitures()">-</button>
+                <p id="garnituresPizza"></p>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="tempsCuissonPizza">Temps cuisson:</label></td>
+            <td><input id="tempsCuissonPizza"></input>(minutes)</td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="button" id="btnInstancier" onclick="instancier()">Instancier</button>
+            </td>
+        </tr>
+    </table>
+
+    <p id="retour"> 
+    </p>
+ 
+    <form id="frmPizza" action="#" method="post" hidden>
+        <textarea rows="4" cols="100" id="instancePizza" name="instancePizza" readonly></textarea>
+        <br>
+        <input type="submit" id="btnEnregistrer" value="Enregistrer"/>
+    </form>
+
+</body>
+
+<script>
+
+    //Charger listes en mémoire
+    var listeTailles = parseListe("TAILLE",'{{listePyTailles|tojson}}');
+    var listeCroutes = parseListe("CROUTE",'{{listePyCroutes|tojson}}');
+    var listeFromages = parseListe("FROMAGE",'{{listePyFromages|tojson}}');
+    var listeGarnitures = parseListe("GARNITURE",'{{listePyGarnitures|tojson}}');
+
+    var listeFromagesChoisis = [];
+    var listeGarnituresChoisies = [];
+
+    function parseListe(type, stringJson){
+        var listeJson = JSON.parse(stringJson);
+        var liste = [];
+        for(temp of listeJson){
+            switch(type){
+                case "TAILLE":
+                    var t = new Taille(temp["nom"], temp["diametre"], temp["facteur"]);
+                    break;
+                case "CROUTE":
+                    var t = new Croute(temp["nom"], temp["poids"], temp["type"], temp["prix"], temp["taille"]);
+                    break;
+                case "FROMAGE":
+                    var t = new Fromage(temp["nom"], temp["poids"], temp["prix"]);
+                    break;
+                case "GARNITURE":
+                    var t = new Garniture(temp["nom"], temp["poids"], temp["prix"]);
+                    break;
+            }
+            liste.push(t);
+        }
+        return liste;
+    }
+
+    function ajouterFromage() {
+        var retour = document.getElementById("retour");
+        var entree = document.getElementById("fromagePizza");
+        retour.innerHTML = "";
+
+        if (entree.value == "") {
+            retour.innerHTML = "Erreur: Fromage vide";
+        }
+        else {
+            listeFromagesChoisis.push(entree.value);
+            document.getElementById("fromagesPizza").innerHTML = listeFromagesChoisis;
+        }
+        
+    }
+
+    function ajouterGarniture() {
+        var retour = document.getElementById("retour");
+        var entree = document.getElementById("garniturePizza");
+        retour.innerHTML = "";
+
+        if (entree.value == "") {
+            retour.innerHTML = "Erreur: Garniture vide";
+        }
+        else {
+            listeGarnituresChoisies.push(entree.value);
+            document.getElementById("garnituresPizza").innerHTML = listeGarnituresChoisies;
+        }
+        
+    }
+
+    function viderFromages(){
+        listeFromagesChoisis = [];
+        document.getElementById("fromagesPizza").innerHTML = listeFromagesChoisis;
+        document.getElementById("retour").innerHTML = "";
+    }
+
+    function viderGarnitures(){
+        listeGarnituresChoisies = [];
+        document.getElementById("garnituresPizza").innerHTML = listeGarnituresChoisies;
+        document.getElementById("retour").innerHTML = "";
+    }
+
+    function instancier() {
+        var retour = document.getElementById("retour");
+        retour.innerHTML = "";
+
+        if (document.getElementById("numeroPizza").value.length == 0) {
+            retour.innerHTML = "Erreur: Numéro de la Pizza vide";
+        }
+        else if (document.getElementById("taillePizza").value.length == 0) {
+            retour.innerHTML = "Erreur: Taille de la Pizza vide";
+        }
+        else if (document.getElementById("croutePizza").value.length == 0) {
+            retour.innerHTML = "Erreur: Croute vide";
+        }
+        else if (listeFromagesChoisis.length == 0) {
+            retour.innerHTML = "Erreur: Liste de fromages vide";
+        }
+        else if (listeGarnituresChoisies.length == 0) {
+            retour.innerHTML = "Erreur: Liste de garnitures vide";
+        }
+        else if (document.getElementById("tempsCuissonPizza").value.length == 0) {
+            retour.innerHTML = "Erreur: Temps de cuisson vide";
+        }
+        else {
+            instancierPizza();
+        }
+ 
+    }
+
+    function instancierPizza() {
+        var p1 = new Pizza(
+            document.getElementById("numeroPizza").value,
+            listeTailles[document.getElementById("taillePizza").value],
+            listeCroutes[document.getElementById("croutePizza").value],
+            genererListe(listeFromagesChoisis, listeFromages),
+            genererListe(listeGarnituresChoisies, listeGarnitures),
+            document.getElementById("tempsCuissonPizza").value,
+            0
+        );
+
+        document.getElementById("instancePizza").value = JSON.stringify(p1);
+        if(document.getElementById("instancePizza").value != ""){
+            document.getElementById("frmPizza").hidden = false;
+        }
+    }
+
+</script>
+
+</html>

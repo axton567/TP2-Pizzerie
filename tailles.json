@@ -1,0 +1,17 @@
+[
+    {
+        "nom": "P",
+        "diametre": 12,
+        "facteur": 1
+    },
+    {
+        "nom": "M",
+        "diametre": 20,
+        "facteur": 2
+    },
+    {
+        "nom": "G",
+        "diametre": 30,
+        "facteur": 3
+    }
+]
