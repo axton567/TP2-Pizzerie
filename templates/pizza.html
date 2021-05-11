@@ -48,13 +48,19 @@
             <td><label for="croutePizza">Croute:</label></td>
             <td><select id="croutePizza">
                     <option></option>
+                    {% for i in range(listePyCroutes|length) %}
+                        <option value="{{ i }}">{{ listePyCroutes[i]["nom"] }}</option>
+                    {% endfor %}
                 </select>
             </td>
         </tr>
         <tr>
             <td><label for="fromagesPizza">Fromages:</label></td>
             <td><select id="fromagePizza">
-                    <option></option>            
+                    <option></option>
+                    {% for i in range(listePyFromages|length) %}
+                        <option value="{{ i }}">{{ listePyFromages[i]["nom"] }}</option>
+                    {% endfor %}            
                 </select>
                 <button type="button" id="btnAjouterFromage" onclick="ajouterFromage()">+</button>
                 <button type="button" id="btnViderFromages" onclick="viderFromages()">-</button>
@@ -65,6 +71,9 @@
             <td><label for="garnituresPizza">Garnitures:</label></td>
             <td><select id="garniturePizza">
                     <option></option>
+                    {% for i in range(listePyGarnitures|length) %}
+                        <option value="{{ i }}">{{ listePyGarnitures[i]["nom"] }}</option>
+                    {% endfor %}
                 </select>
                 <button type="button" id="btnAjouterGarniture" onclick="ajouterGarniture()">+</button>
                 <button type="button" id="btnViderGarnitures" onclick="viderGarnitures()">-</button>
@@ -81,7 +90,11 @@
         </tr>
     </table>
 
-    <p id="retour"> 
+    <p id="retour">
+        {%if resquet%}
+            <p>{{message}}</p>
+            <p>{{prix}}</p>
+        {%endif%}
     </p>
  
     <form id="frmPizza" action="#" method="post" hidden>

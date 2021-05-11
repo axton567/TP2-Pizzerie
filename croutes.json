@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "nom": "hhh",
+        "poids": 1,
+        "type": "epaisse",
+        "prix": 1
+    },
+    {
+        "nom": "kiu",
+        "poids": 1,
+        "type": "epaisse",
+        "prix": null
+    }
+]

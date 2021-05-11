@@ -37,6 +37,9 @@
             <td><label for="clientCommande">Client:</label></td>
             <td><select id="clientCommande">
                     <option></option>
+                    {% for i in range(listePyClients|length) %}
+                        <option value="{{ i }}">{{ listePyClients[i]["nom"] }}</option>
+                    {% endfor %}
                 </select>
             </td>
         </tr>
@@ -52,6 +55,9 @@
             <td><label for="pizzasCommande">Pizzas:</label></td>
             <td><select id="pizzaCommande">
                     <option></option>
+                    {% for i in range(listePyPizzas|length) %}
+                        <option value="{{ i }}">{{ listePyPizzas[i]["numero"] }}</option>
+                    {% endfor %}
                 </select>
                 <button type="button" id="btnAjouterPizza" onclick="ajouterPizza()">+</button>
                 <button type="button" id="btnViderPizzas" onclick="viderPizzas()">-</button>
@@ -65,6 +71,10 @@
     </table>
 
     <p id="retour">
+    {%if request%}
+        <p>{{message}}</p>
+        <p>{{prix}}</p>
+    {%endif%}
     </p>
 
     <form id="frmCommande" action="#" method="post" hidden>
