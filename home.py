@@ -88,15 +88,14 @@ def commande():
         prixTvq = prixPizza * 0.0975
         prixPizza += (prixTps + prixTvq)
         commandeJson["montantTotal"] = prixPizza
-        ajoutObjet(commandeJson, "commandes.json")
-
-        return render_template("commande.html",message=msg, prix=prix ,request=request,listePyClients=listeClients, listePyPizzas=listePizzas)
-    else:
-        return render_template("commande.html", listePyClients=listeClients, listePyPizzas=listePizzas)
-
-    if request == "POST":
+        if prixPizza >0:
             msg = "Commande enregistrée"
             prix = "Prix de la commande: " + str(prixPizza)+"$(avec taxes)"
+        ajoutObjet(commandeJson, "commandes.json")
+
+        return render_template("commande.html",message=msg, prix=prix ,prixCommande=prixPizza,listePyClients=listeClients, listePyPizzas=listePizzas)
+    else:
+        return render_template("commande.html", listePyClients=listeClients, listePyPizzas=listePizzas)
 
 @app.route("/pizza", methods=["POST", "GET"])
 def pizza():
@@ -121,15 +120,14 @@ def pizza():
                 TailleFacteur =valeur
         prixComplet = croutePrix +(fromagePrix * TailleFacteur)+(garniturePrix * TailleFacteur)
         pizzaJson["prixComplet"] = prixComplet
-        ajoutObjet(pizzaJson, "pizzas.json")
-
-        return render_template("pizza.html",message=msg, prix=prix ,request=request,listePyTailles=listeTailles, listePyCroutes=listeCroutes, listePyFromages=listeFromages, listePyGarnitures=listeGarnitures)
-    else:
-        return render_template("pizza.html", listePyTailles=listeTailles, listePyCroutes=listeCroutes, listePyFromages=listeFromages, listePyGarnitures=listeGarnitures)
-    
-        if request == "POST":
+        if prixComplet >0:
             msg = "Pizza enregistrée"
             prix = "Prix de la pizza: " + str(prixComplet)+"$"
+        ajoutObjet(pizzaJson, "pizzas.json")
+
+        return render_template("pizza.html",message=msg, prix=prix ,prixComplet=prixComplet,listePyTailles=listeTailles, listePyCroutes=listeCroutes, listePyFromages=listeFromages, listePyGarnitures=listeGarnitures)
+    else:
+        return render_template("pizza.html", listePyTailles=listeTailles, listePyCroutes=listeCroutes, listePyFromages=listeFromages, listePyGarnitures=listeGarnitures)
 
 
 if __name__ == "__main__":
